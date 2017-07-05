@@ -59,6 +59,11 @@ but it will not work, because Chrome Driver explicitly bails from `ChromeRemoteI
 
 ps. As a workaround, if you really want to make screenshots, you can make a `<canvas>`, draw into it, then use `Hound.ScriptExecution` to pass the results back, like what Panic’s [Coda Notes](https://panic.com/blog/coda-notes-previe/) did.
 
+
+## To Be Dealt With
+
+1.  Actually run multiple copies Chrome + Chrome Driver each with its isolated port, process space and user profile. This is because Hound’s support multiple sessions is at least a little bit wonky. When run against Headless Chrome, `change_session_to` actually spins up a new Chrome Driver managed instance of Chrome. And calling `Kennel.start_session` a second time in `Task.async` simply times out. So the entire Sessions API in Hound is to not be used and a replacement against some kind of pooling mechanism needs to be written.
+
 ## License
 
 This project is under the MIT license.
