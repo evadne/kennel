@@ -57,6 +57,10 @@ You may be tempted to modify `Kennel.chrome_command` and pass something like thi
 
 but it will not work, because Chrome Driver explicitly bails from `ChromeRemoteImpl::GetAsDesktop`, so any call going through `ChromeRemoteImpl::GetAsDesktop` will not work (and not even tried). Therefore, methods that have to do with screenshots and window sizes do not work at the moment.
 
+Please note that in Chrome 60 (beta out very recently), the screenshot feature [may have been repaired](https://drivy.engineering/running-capybara-headless-chrome/):
+
+> With Capybara, there is a possibility to take a screenshot during your tests (or automatically on a failure). This feature results in an empty gray image on headless Chrome 59 but the proper behavior is restored on Chrome 60 (in beta as of today).
+
 ps. As a workaround, if you really want to make screenshots, you can make a `<canvas>`, draw into it, then use `Hound.ScriptExecution` to pass the results back, like what Panic’s [Coda Notes](https://panic.com/blog/coda-notes-previe/) did.
 
 
