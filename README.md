@@ -62,7 +62,11 @@ ps. As a workaround, if you really want to make screenshots, you can make a `<ca
 
 ## To Be Dealt With
 
-1.  Actually run multiple copies Chrome + Chrome Driver each with its isolated port, process space and user profile. This is because Hound’s support multiple sessions is at least a little bit wonky. When run against Headless Chrome, `change_session_to` actually spins up a new Chrome Driver managed instance of Chrome. And calling `Kennel.start_session` a second time in `Task.async` simply times out. So the entire Sessions API in Hound is to not be used and a replacement against some kind of pooling mechanism needs to be written.
+1.  Actually run multiple copies Chrome + Chrome Driver each with its isolated port, process space and user profile. This is because Hound’s support for multiple sessions is at least a little bit wonky.
+
+    When run against Headless Chrome, `change_session_to` actually spins up a new Chrome Driver managed instance of Chrome. And calling `Kennel.start_session` a second time in `Task.async` simply times out. So the entire Sessions API in Hound is to not be used and a replacement against some kind of pooling mechanism needs to be written.
+
+2.  Write a Self-Test routine within Kennel.start_session and raise error if resultant connection is no good.
 
 ## License
 
