@@ -11,8 +11,6 @@ A simple Application showing how to run [Headless Chrome](https://developers.goo
 
 This gives us much better control over what’s run, at what time, and under what terms, instead of ceding control over spawning of child OS processes to third-party dependencies. (For example, Chrome Driver is set to `detach` by default — see [Capabilities & Options](https://sites.google.com/a/chromium.org/chromedriver/capabilities) — yet when the `SIGTERM` signal is sent to BEAM, only Chrome and not Chrome Driver is terminated.)
 
-Please note that Chrome Driver achieves certain behaviour via an “automation” extension which needs to be loaded as Chrome is started. This should be doable via the `--load-extension` argument which is then passed to Chrome, but it is currently not in place and may [cause you issues](https://sites.google.com/a/chromium.org/chromedriver/help/operation-not-supported-when-using-remote-debugging) and the unpacked version of such extension is currently not easily located.
-
 ## Running
 
 Tested with: Elixir 1.4.4, Erlang/OTP 19, HomeBrew/macOS.
@@ -44,6 +42,22 @@ nil
 iex(5)> page_title()
 "Google"
 ```
+
+## Caution: Remote Debugging
+
+Please note that Chrome Driver achieves certain behaviour via an “automation” extension which needs to be loaded as Chrome is started.
+
+This should be doable via the `--load-extension` argument which is then passed to Chrome, but it is currently not in place and may [cause you issues](https://sites.google.com/a/chromium.org/chromedriver/help/operation-not-supported-when-using-remote-debugging) and the unpacked version of such extension is currently not easily located.
+
+You may be tempted to modify `Kennel.chrome_command` and pass something like this,
+
+```
+--load-extension="/Users/evadne/Works/Code/bayandin-chromedriver/extension"
+```
+
+but it will not work, because Chrome Driver explicitly bails from `ChromeRemoteImpl::GetAsDesktop`, so any call going through `ChromeRemoteImpl::GetAsDesktop` will not work (and not even tried). Therefore, methods that have to do with screenshots and window sizes do not work at the moment.
+
+ps. As a workaround, if you really want to make screenshots, you can make a `<canvas>`, draw into it, then use `Hound.ScriptExecution` to pass the results back, like what Panic’s [Coda Notes](https://panic.com/blog/coda-notes-previe/) did.
 
 ## License
 
