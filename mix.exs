@@ -5,7 +5,7 @@ defmodule Collab.Mixfile do
     [
       app: :kennel,
       version: "0.0.1",
-      elixir: "~> 1.4.4",
+      elixir: ">= 1.4.4",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: Mix.compilers,
       build_embedded: Mix.env == :prod,
@@ -25,7 +25,7 @@ defmodule Collab.Mixfile do
       applications: applications_list()
     ]
   end
-  
+
   defp applications_list() do
     [
       :inets,
@@ -47,7 +47,7 @@ defmodule Collab.Mixfile do
       {:hound, "~> 1.0.1"}
     ]
   end
-  
+
   defp dialyzer do
     [
       ignore_warnings: "dialyzer.ignore-warnings",
